@@ -1,7 +1,7 @@
 name: gridschedule
 description: You can make a grid Schedule
 version: 0.0.1
-homepage:
+homepage: https://github.com/praneethpj/GridSchduleCalender
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

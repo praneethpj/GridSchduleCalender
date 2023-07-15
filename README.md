@@ -11,22 +11,74 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+TODO: Flutter Grid Schedule Calender.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+TODO: You can create Schedule Based Grid Calender Instantly
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+TODO:  pub add gridschedule
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+void available(args) {
+ScaffoldMessenger.of(context)
+.showSnackBar(SnackBar(content: Text(args.time.toString())));
+}
+
+    void unavailable(args) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(args.time.toString())));
+    }
+
+    List<ScheduleModel> gridData = [
+      ScheduleModel(
+        day: 6,
+        time: "13:00-13:30",
+        availability: 0,
+        timeAvailableColor: Colors.purple,
+        timeUnavailableColor: Colors.grey,
+        timeAvailableTextColor: Colors.black,
+        timeUnavailableTextColor: Colors.black,
+        onTapTimeAvailable: (object) => available(object),
+        onTapTimeUnavailable: (object) => unavailable(object),
+      ),
+      ScheduleModel(
+        day: 6,
+        time: "14:00-13:30",
+        availability: 1,
+        timeAvailableColor: Colors.purple,
+        timeUnavailableColor: Colors.grey,
+        timeAvailableTextColor: Colors.black,
+        timeUnavailableTextColor: Colors.white,
+        onTapTimeAvailable: (object) => available(object),
+        onTapTimeUnavailable: (object) => unavailable(object),
+      ),
+      ScheduleModel(
+        day: 6,
+        time: "14:00-13:30",
+        availability: 1,
+        timeAvailableColor: Colors.purple,
+        timeUnavailableColor: Colors.grey,
+        timeAvailableTextColor: Colors.black,
+        timeUnavailableTextColor: Colors.white,
+        onTapTimeAvailable: (object) => available(object),
+        onTapTimeUnavailable: (object) => unavailable(object),
+      ),
+    ];
+
+    GridDetail gridDetail = GridDetail(
+        lable: "Grid",
+        costPerGrid: 10,
+        arrowButtonColor: Color.fromARGB(255, 183, 200, 255).withOpacity(0.3),
+        gridCount: 3);
+
+    return intMyPackage(
+        title: "Call Schedule",
+        gridData: gridData,
+        gridDetail: gridDetail,
 
 ```dart
 const like = 'sample';
@@ -34,6 +86,4 @@ const like = 'sample';
 
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+You can raised issues in this repo https://github.com/praneethpj/GridSchduleCalender/issues
