@@ -1,80 +1,17 @@
 
-
-import 'package:flutter/material.dart';
-import 'package:gridschedule/src/blocs/grids/grid_bloc.dart';
-import 'package:gridschedule/src/models/grid_detail.dart';
-import 'package:gridschedule/src/models/schedule_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gridschedule/gridschedule.dart';
+import 'package:gridschedule/src/blocs/grids/grid_bloc.dart';
 import 'package:gridschedule/src/repositories/grid_repositoy.dart';
 
-class GridSchedule extends StatefulWidget{
-  final int profileId;
-  final double costperhour;
-  final String profileName;
-  final String profileType;
+class GridScheduleWidget extends StatelessWidget {
   final String title;
+  final List<ScheduleModel> gridData;
+  final  GridDetail gridDetail;
+   const GridScheduleWidget({super.key, required this.title, required this.gridData, required this.gridDetail});
 
-  const GridSchedule(
-      {super.key,
-        required this.profileId,
-        required this.costperhour,
-        required this.profileName,
-        required this.profileType,
-        required this.title});
-  @override
-  State<GridSchedule> createState() => _GridScheduleState();
-
-}
-
-class _GridScheduleState extends State<GridSchedule> {
-  String currentDay = "";
-  String currentMonth = "";
-  String currentYear = "";
-  int currentMonthNum = 0;
-  bool isToday = true;
-  int dayId = 0;
-
-  String profilename = "";
-  String bookeddate = "";
-  int selectedDayId = 0;
-  int selectedIdx = -1;
-
-  int calculateDifference(DateTime date) {
-    DateTime now = DateTime.now();
-    return DateTime(date.year, date.month, date.day)
-        .difference(DateTime(now.year, now.month, now.day))
-        .inDays;
-  }
-  getDayId(String abr) {
-    switch (abr) {
-      case "Sun":
-        dayId = 0;
-        break;
-      case "Mon":
-        dayId = 1;
-        break;
-      case "Tue":
-        dayId = 2;
-        break;
-      case "Wed":
-        dayId = 3;
-        break;
-      case "Thu":
-        dayId = 4;
-        break;
-      case "Fri":
-        dayId = 5;
-        break;
-      case "Sat":
-        dayId = 6;
-        break;
-    }
-  }
-
-
-  intMyPackage(
+  _intGridSchedulePackage(
       {required Widget widget,
         required String title,
         required List<ScheduleModel> gridData,
@@ -98,10 +35,452 @@ class _GridScheduleState extends State<GridSchedule> {
 
   @override
   Widget build(BuildContext context) {
-  return Container();
+    var _deviceSize = MediaQuery.of(context).size;
+
+    return _intGridSchedulePackage(
+        title: title,
+        gridData: gridData,
+        gridDetail: gridDetail,
+        widget: Scaffold(
+          body: Align(
+            alignment: Alignment.topCenter,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: BlocBuilder<GridBloc, GridState>(
+                builder: (context, state) {
+                  if (state is GridStateCreateSchedule) {
+                    return Column(
+                      children: <Widget>[
+                        Container(
+                          height: _deviceSize.height * 0.08,
+                          child: Container(
+                            margin:
+                            EdgeInsets.only(left: _deviceSize.width * 0.05),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: state.gridRepository.isToday
+                                      ? IconButton(
+                                      onPressed: null,
+                                      icon: Icon(Icons.arrow_left))
+                                      : Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: state.gridRepository
+                                              .getGridDetails()
+                                              .arrowButtonColor,
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: const Offset(0, 3),
+                                          // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () => context
+                                          .read<GridBloc>()
+                                          .add(GridEventClickBack(
+                                          title: "",
+                                          day: state.gridRepository
+                                              .currentDay,
+                                          gridData: gridData,
+                                          gridDetail: gridDetail)),
+                                      icon: const Icon(Icons.arrow_back),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: _deviceSize.width / 6,
+                                ),
+                                Column(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "${state.gridRepository.currentMonth}",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${state.gridRepository.currentDay}",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: _deviceSize.width / 6,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: state.gridRepository
+                                              .getGridDetails()
+                                              .arrowButtonColor,
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                          offset: Offset(0, 3),
+                                          // changes position of shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () => context
+                                          .read<GridBloc>()
+                                          .add(GridEventClickNext(
+                                          title: "",
+                                          day: state
+                                              .gridRepository.currentDay,
+                                          gridData: gridData,
+                                          gridDetail: gridDetail)),
+                                      icon: const Icon(Icons.arrow_right),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: _deviceSize.height * 0.01,
+                        ),
+                        FutureBuilder(
+                          future: state.gridRepository.getSchedules(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return SizedBox(
+                                height: _deviceSize.height,
+                                width: _deviceSize.width,
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.length,
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: state.gridRepository
+                                        .getGridDetails()
+                                        .gridCount,
+                                    crossAxisSpacing: 4.0,
+                                    mainAxisSpacing: 4.0,
+                                  ),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (snapshot.data![index]
+                                                .availability ==
+                                                1) {
+                                              snapshot.data![index]
+                                                  .onTapTimeAvailable(
+                                                  snapshot.data![index]);
+                                              ;
+                                            } else {
+                                              snapshot.data![index]
+                                                  .onTapTimeUnavailable(
+                                                  snapshot.data![index]);
+                                              ;
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              height: 100,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Color.fromARGB(
+                                                      255, 199, 199, 199),
+                                                ),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5)),
+                                                color: snapshot.data![index]
+                                                    .availability ==
+                                                    1
+                                                    ? state.gridRepository
+                                                    .selectedIdx ==
+                                                    index
+                                                    ? snapshot.data![index]
+                                                    .timeAvailableColor
+                                                    : snapshot.data![index]
+                                                    .timeUnavailableColor
+                                                    : Color.fromARGB(
+                                                    255, 236, 235, 235),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                const EdgeInsets.all(8.0),
+                                                child: Center(
+                                                  child: state.gridRepository
+                                                      .selectedIdx ==
+                                                      index &&
+                                                      snapshot.data![index]
+                                                          .availability ==
+                                                          1
+                                                      ? Text(
+                                                    "${snapshot.data![index].time}",
+                                                    style: TextStyle(
+                                                      color: snapshot
+                                                          .data![index]
+                                                          .timeUnavailableTextColor,
+                                                    ),
+                                                  )
+                                                      : Text(
+                                                    "${snapshot.data![index].time}",
+                                                    style: TextStyle(
+                                                        color: snapshot
+                                                            .data![index]
+                                                            .timeUnavailableTextColor),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  CircularProgressIndicator(),
+                                ],
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  } else if (state is GridStateNextDay) {
+                    return Column(
+                      children: <Widget>[
+                        Container(
+                          height: _deviceSize.height * 0.08,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: state.gridRepository.isToday
+                                    ? IconButton(
+                                    onPressed: null,
+                                    icon: Icon(Icons.arrow_left))
+                                    : Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: state.gridRepository
+                                            .getGridDetails()
+                                            .arrowButtonColor,
+                                        spreadRadius: 2,
+                                        blurRadius: 5,
+                                        offset: Offset(0, 3),
+                                        // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () => context
+                                        .read<GridBloc>()
+                                        .add(GridEventClickBack(
+                                        title: "",
+                                        day: state.gridRepository
+                                            .currentDay,
+                                        gridData: gridData,
+                                        gridDetail: gridDetail)),
+                                    icon: const Icon(Icons.arrow_left),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: _deviceSize.width / 6,
+                              ),
+                              Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Text(
+                                        "${state.gridRepository.currentMonth}",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      Text(
+                                        "${state.gridRepository.currentDay}",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: _deviceSize.width / 6,
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: state.gridRepository
+                                            .getGridDetails()
+                                            .arrowButtonColor,
+                                        spreadRadius: 2,
+                                        blurRadius: 5,
+                                        offset: Offset(0, 3),
+                                        // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () => {
+                                      context.read<GridBloc>().add(
+                                          GridEventClickNext(
+                                              title: "",
+                                              day: state
+                                                  .gridRepository.currentDay,
+                                              gridData: gridData,
+                                              gridDetail: gridDetail))
+                                    },
+                                    icon: Icon(Icons.arrow_right),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: _deviceSize.height * 0.01,
+                        ),
+                        FutureBuilder(
+                          future: state.gridRepository.getSchedules(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return SizedBox(
+                                height: _deviceSize.height,
+                                child: GridView.builder(
+                                  itemCount: snapshot.data!.length,
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: state.gridRepository
+                                        .getGridDetails()
+                                        .gridCount,
+                                    crossAxisSpacing: 4.0,
+                                    mainAxisSpacing: 4.0,
+                                  ),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            if (snapshot.data![index]
+                                                .availability ==
+                                                1) {
+                                              snapshot.data![index]
+                                                  .onTapTimeAvailable(
+                                                  snapshot.data![index]);
+                                            } else {
+                                              snapshot.data![index]
+                                                  .onTapTimeUnavailable(
+                                                  snapshot.data![index]);
+                                            }
+                                          },
+                                          child: Container(
+                                            width: _deviceSize.width,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Color.fromARGB(
+                                                    255, 199, 199, 199),
+                                              ),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5)),
+                                              color: snapshot.data![index]
+                                                  .availability ==
+                                                  1
+                                                  ? state.gridRepository
+                                                  .selectedIdx ==
+                                                  index
+                                                  ? snapshot.data![index]
+                                                  .timeAvailableColor
+                                                  : snapshot.data![index]
+                                                  .timeUnavailableColor
+                                                  : Color.fromARGB(
+                                                  255, 236, 235, 235),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets.all(8.0),
+                                              child: Center(
+                                                child: state.gridRepository
+                                                    .selectedIdx ==
+                                                    index &&
+                                                    snapshot.data![index]
+                                                        .availability ==
+                                                        1
+                                                    ? Text(
+                                                  "${snapshot.data![index].time}",
+                                                  style: TextStyle(
+                                                    color: snapshot
+                                                        .data![index]
+                                                        .timeAvailableTextColor,
+                                                  ),
+                                                )
+                                                    : Text(
+                                                  "${snapshot.data![index].time}",
+                                                  style: TextStyle(
+                                                      color: snapshot
+                                                          .data![index]
+                                                          .timeUnavailableTextColor),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              );
+                            } else {
+                              return Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  CircularProgressIndicator(),
+                                ],
+                              );
+                            }
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                  return CircularProgressIndicator();
+                },
+              ),
+            ),
+          ),
+        ));
   }
-
-
-
-
 }
