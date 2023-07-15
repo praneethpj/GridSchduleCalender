@@ -1,7 +1,8 @@
 
-import 'package:gridschedule/src/helper/data_helper.dart';
-import 'package:gridschedule/src/models/grid_detail.dart';
-import 'package:gridschedule/src/models/schedule.dart';
+
+import 'package:grid_schedule_calender/grid_schedule_calender.dart';
+import 'package:grid_schedule_calender/src/helper/data_helper.dart';
+
 
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';

@@ -1,10 +1,10 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gridschedule/src/models/grid_detail.dart';
-import 'package:gridschedule/src/repositories/grid_repositoy.dart';
+import 'package:grid_schedule_calender/grid_schedule_calender.dart';
 
-import 'package:gridschedule/src/models/schedule.dart';
+import 'package:grid_schedule_calender/src/repositories/grid_repositoy.dart';
+
 
 part 'grid_events.dart';
 part 'grid_states.dart';

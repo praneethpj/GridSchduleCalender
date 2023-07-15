@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gridschedule/gridschedule.dart';
-import 'package:gridschedule/src/blocs/grids/grid_bloc.dart';
-import 'package:gridschedule/src/repositories/grid_repositoy.dart';
+import 'package:grid_schedule_calender/gridschedule.dart';
+import 'package:grid_schedule_calender/src/blocs/grids/grid_bloc.dart';
+import 'package:grid_schedule_calender/src/repositories/grid_repositoy.dart';
+
 
 class GridScheduleWidget extends StatelessWidget {
   final String title;
