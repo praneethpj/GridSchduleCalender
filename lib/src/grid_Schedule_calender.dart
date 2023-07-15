@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grid_schedule_calender/gridschedule.dart';
+import 'package:grid_schedule_calender/grid_schedule_calender.dart';
+import 'package:grid_schedule_calender/src/models/schedule.dart';
+import 'package:grid_schedule_calender/src/models/grid_detail.dart';
 import 'package:grid_schedule_calender/src/blocs/grids/grid_bloc.dart';
 import 'package:grid_schedule_calender/src/repositories/grid_repositoy.dart';
 
@@ -234,6 +236,7 @@ class GridScheduleWidget extends StatelessWidget {
                                                       color: snapshot
                                                           .data![index]
                                                           .timeUnavailableTextColor,
+                                                      fontSize:snapshot.data![index].timeAvailableTextSize
                                                     ),
                                                   )
                                                       : Text(
@@ -241,7 +244,7 @@ class GridScheduleWidget extends StatelessWidget {
                                                     style: TextStyle(
                                                         color: snapshot
                                                             .data![index]
-                                                            .timeUnavailableTextColor),
+                                                            .timeUnavailableTextColor, fontSize:snapshot.data![index].timeUnavailableTextSize),
                                                   ),
                                                 ),
                                               ),
@@ -444,6 +447,7 @@ class GridScheduleWidget extends StatelessWidget {
                                                     color: snapshot
                                                         .data![index]
                                                         .timeAvailableTextColor,
+                                                      fontSize:snapshot.data![index].timeAvailableTextSize
                                                   ),
                                                 )
                                                     : Text(
@@ -451,7 +455,7 @@ class GridScheduleWidget extends StatelessWidget {
                                                   style: TextStyle(
                                                       color: snapshot
                                                           .data![index]
-                                                          .timeUnavailableTextColor),
+                                                          .timeUnavailableTextColor, fontSize:snapshot.data![index].timeUnavailableTextSize),
                                                 ),
                                               ),
                                             ),

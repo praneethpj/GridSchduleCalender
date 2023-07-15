@@ -23,57 +23,54 @@ TODO:  pub add gridschedule
 
 ## Usage
 
-void available(args) {
-ScaffoldMessenger.of(context)
-.showSnackBar(SnackBar(content: Text(args.time.toString())));
-}
+Widget build(BuildContext context) {
+GridDetail gridDetail = GridDetail(
+lable: "Grid",
+costPerGrid: 10,
+arrowButtonColor: Color.fromARGB(255, 183, 200, 255).withOpacity(0.3),
+gridCount: 3);
 
-    void unavailable(args) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(args.time.toString())));
-    }
-
-    List<ScheduleModel> gridData = [
-      ScheduleModel(
-        day: 6,
-        time: "13:00-13:30",
-        availability: 0,
-        timeAvailableColor: Colors.purple,
-        timeUnavailableColor: Colors.grey,
-        timeAvailableTextColor: Colors.black,
-        timeUnavailableTextColor: Colors.black,
-        onTapTimeAvailable: (object) => available(object),
-        onTapTimeUnavailable: (object) => unavailable(object),
-      ),
-      ScheduleModel(
-        day: 6,
-        time: "14:00-13:30",
-        availability: 1,
-        timeAvailableColor: Colors.purple,
-        timeUnavailableColor: Colors.grey,
-        timeAvailableTextColor: Colors.black,
-        timeUnavailableTextColor: Colors.white,
-        onTapTimeAvailable: (object) => available(object),
-        onTapTimeUnavailable: (object) => unavailable(object),
-      ),
-      ScheduleModel(
-        day: 6,
-        time: "14:00-13:30",
-        availability: 1,
-        timeAvailableColor: Colors.purple,
-        timeUnavailableColor: Colors.grey,
-        timeAvailableTextColor: Colors.black,
-        timeUnavailableTextColor: Colors.white,
-        onTapTimeAvailable: (object) => available(object),
-        onTapTimeUnavailable: (object) => unavailable(object),
-      ),
+    List<Schedule> schedule = [
+      Schedule(
+          day: 0,
+          time: "1.00-2.00",
+          availability: 1,
+          timeAvailableColor: Colors.pink,
+          timeUnavailableColor: Colors.lightGreen,
+          timeAvailableTextColor: Colors.black,
+          timeUnavailableTextColor: Colors.black,
+          onTapTimeAvailable: (p0) {
+            var tm = p0 as Schedule;
+            print(tm.time);
+          },
+          onTapTimeUnavailable: (args) {
+            //  args as Sched
+          }),
+      Schedule(
+          day: 0,
+          time: "2.00-3.00",
+          availability: 1,
+          timeAvailableColor: Colors.pink,
+          timeUnavailableColor: Colors.lightGreen,
+          timeAvailableTextColor: Colors.white,
+          timeUnavailableTextColor: Colors.black,
+          onTapTimeAvailable: (p0) {
+            var tm = p0 as Schedule;
+            print(tm.time);
+          },
+          onTapTimeUnavailable: (args) {
+            print(args);
+          }),
     ];
 
-    GridDetail gridDetail = GridDetail(
-        lable: "Grid",
-        costPerGrid: 10,
-        arrowButtonColor: Color.fromARGB(255, 183, 200, 255).withOpacity(0.3),
-        gridCount: 3);
+    return SafeArea(
+      child: Scaffold(
+          body: GridScheduleWidget(
+              title: "Grid Schedule",
+              schedule: schedule,
+              gridDetail: gridDetail)),
+    );
+}
 
   
 

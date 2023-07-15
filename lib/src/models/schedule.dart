@@ -8,6 +8,9 @@ class Schedule {
   Color timeUnavailableColor;
   Color timeAvailableTextColor;
   Color timeUnavailableTextColor;
+  double? timeAvailableTextSize=12;
+  double? timeUnavailableTextSize=12;
+
 
   Function(Object) onTapTimeAvailable;
   Function(Object) onTapTimeUnavailable;
@@ -21,5 +24,5 @@ class Schedule {
       required this.timeAvailableTextColor,
       required this.timeUnavailableTextColor,
       required this.onTapTimeAvailable,
-      required this.onTapTimeUnavailable});
+      required this.onTapTimeUnavailable,this.timeAvailableTextSize,this.timeUnavailableTextSize});
 }
