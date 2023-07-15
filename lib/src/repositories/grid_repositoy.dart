@@ -1,13 +1,13 @@
 
 import 'package:gridschedule/src/helper/data_helper.dart';
 import 'package:gridschedule/src/models/grid_detail.dart';
-import 'package:gridschedule/src/models/schedule_model.dart';
+import 'package:gridschedule/src/models/schedule.dart';
 
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
 class GridRepository {
-  List<ScheduleModel> _scheduleModel = [];
+  List<Schedule> _schedule = [];
   late GridDetail _gridDetail;
   bool isToday = true;
 
@@ -32,8 +32,8 @@ class GridRepository {
   }
 
   Future<void> createSchedules(
-      List<ScheduleModel> scheduleModel, GridDetail gridDetails) async {
-    _scheduleModel = scheduleModel;
+      List<Schedule> schedule, GridDetail gridDetails) async {
+    _schedule = schedule;
     _gridDetail = gridDetails;
 
     currentMonth = DataHelper.getCurrentMonth();
@@ -44,9 +44,9 @@ class GridRepository {
     return _gridDetail;
   }
 
-  Future<List<ScheduleModel>> getSchedules() async {
-    List<ScheduleModel> tmpSchedule = [];
-    _scheduleModel.forEach((element) {
+  Future<List<Schedule>> getSchedules() async {
+    List<Schedule> tmpSchedule = [];
+    _schedule.forEach((element) {
       if (element.day == dayId) {
         tmpSchedule.add(element);
       }

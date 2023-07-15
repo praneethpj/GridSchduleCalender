@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ScheduleModel {
+class Schedule {
   int day;
   String time;
   int availability;
@@ -12,7 +12,7 @@ class ScheduleModel {
   Function(Object) onTapTimeAvailable;
   Function(Object) onTapTimeUnavailable;
 
-  ScheduleModel(
+  Schedule(
       {required this.day,
       required this.time,
       required this.availability,

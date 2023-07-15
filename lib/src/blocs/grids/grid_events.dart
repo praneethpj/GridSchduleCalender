@@ -6,32 +6,32 @@ abstract class GridEvent extends Equatable {
 
 class GridEventCreateSchedule extends GridEvent {
   String title;
-  List<ScheduleModel> gridData;
+  List<Schedule> schedule;
   GridDetail gridDetail;
   GridEventCreateSchedule(
-      {required this.title, required this.gridData, required this.gridDetail});
+      {required this.title, required this.schedule, required this.gridDetail});
 }
 
 class GridEventClickNext extends GridEvent {
   String title;
   String day;
-  List<ScheduleModel> gridData;
+  List<Schedule> schedule;
   GridDetail gridDetail;
   GridEventClickNext(
       {required this.title,
       required this.day,
-      required this.gridData,
+      required this.schedule,
       required this.gridDetail});
 }
 
 class GridEventClickBack extends GridEvent {
   String title;
   String day;
-  List<ScheduleModel> gridData;
+  List<Schedule> schedule;
   GridDetail gridDetail;
   GridEventClickBack(
       {required this.title,
       required this.day,
-      required this.gridData,
+      required this.schedule,
       required this.gridDetail});
 }

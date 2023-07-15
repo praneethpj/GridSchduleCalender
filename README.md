@@ -75,10 +75,7 @@ ScaffoldMessenger.of(context)
         arrowButtonColor: Color.fromARGB(255, 183, 200, 255).withOpacity(0.3),
         gridCount: 3);
 
-    return intMyPackage(
-        title: "Call Schedule",
-        gridData: gridData,
-        gridDetail: gridDetail,
+  
 
 ```dart
 const like = 'sample';

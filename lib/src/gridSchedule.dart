@@ -7,14 +7,14 @@ import 'package:gridschedule/src/repositories/grid_repositoy.dart';
 
 class GridScheduleWidget extends StatelessWidget {
   final String title;
-  final List<ScheduleModel> gridData;
+  final List<Schedule> schedule;
   final  GridDetail gridDetail;
-   const GridScheduleWidget({super.key, required this.title, required this.gridData, required this.gridDetail});
+   const GridScheduleWidget({super.key, required this.title, required this.schedule, required this.gridDetail});
 
   _intGridSchedulePackage(
       {required Widget widget,
         required String title,
-        required List<ScheduleModel> gridData,
+        required List<Schedule> schedule,
         required GridDetail gridDetail}) {
     return MultiBlocProvider(
       providers: [
@@ -27,7 +27,7 @@ class GridScheduleWidget extends StatelessWidget {
           create: (context) => GridBloc(
             gridRepository: RepositoryProvider.of<GridRepository>(context),
           )..add(GridEventCreateSchedule(
-              title: title, gridData: gridData, gridDetail: gridDetail)),
+              title: title, schedule: schedule, gridDetail: gridDetail)),
         )
       ], child: widget),
     );
@@ -39,7 +39,7 @@ class GridScheduleWidget extends StatelessWidget {
 
     return _intGridSchedulePackage(
         title: title,
-        gridData: gridData,
+        schedule: schedule,
         gridDetail: gridDetail,
         widget: Scaffold(
           body: Align(
@@ -86,7 +86,7 @@ class GridScheduleWidget extends StatelessWidget {
                                           title: "",
                                           day: state.gridRepository
                                               .currentDay,
-                                          gridData: gridData,
+                                          schedule: schedule,
                                           gridDetail: gridDetail)),
                                       icon: const Icon(Icons.arrow_back),
                                     ),
@@ -142,7 +142,7 @@ class GridScheduleWidget extends StatelessWidget {
                                           title: "",
                                           day: state
                                               .gridRepository.currentDay,
-                                          gridData: gridData,
+                                          schedule: schedule,
                                           gridDetail: gridDetail)),
                                       icon: const Icon(Icons.arrow_right),
                                     ),
@@ -301,7 +301,7 @@ class GridScheduleWidget extends StatelessWidget {
                                         title: "",
                                         day: state.gridRepository
                                             .currentDay,
-                                        gridData: gridData,
+                                        schedule: schedule,
                                         gridDetail: gridDetail)),
                                     icon: const Icon(Icons.arrow_left),
                                   ),
@@ -357,7 +357,7 @@ class GridScheduleWidget extends StatelessWidget {
                                               title: "",
                                               day: state
                                                   .gridRepository.currentDay,
-                                              gridData: gridData,
+                                              schedule: schedule,
                                               gridDetail: gridDetail))
                                     },
                                     icon: Icon(Icons.arrow_right),

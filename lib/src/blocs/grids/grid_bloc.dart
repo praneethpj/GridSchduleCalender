@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gridschedule/src/models/grid_detail.dart';
 import 'package:gridschedule/src/repositories/grid_repositoy.dart';
 
-import 'package:gridschedule/src/models/schedule_model.dart';
+import 'package:gridschedule/src/models/schedule.dart';
 
 part 'grid_events.dart';
 part 'grid_states.dart';
@@ -15,7 +15,7 @@ class GridBloc extends Bloc<GridEvent, GridState> {
   GridBloc({required this.gridRepository}) : super(GridStateInit()) {
     on<GridEventCreateSchedule>((event, state) {
       gridRepository.initData();
-      gridRepository.createSchedules(event.gridData, event.gridDetail).then(
+      gridRepository.createSchedules(event.schedule, event.gridDetail).then(
           (value) =>
               emit(GridStateCreateSchedule(gridRepository: gridRepository)));
     });

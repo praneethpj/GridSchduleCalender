@@ -1,6 +1,6 @@
-name: gridschedule
+name: grid_schedule_calender
 description: You can make a grid Schedule
-version: 0.0.1
+version: 0.0.3
 homepage: https://github.com/praneethpj/GridSchduleCalender
 
 environment:
